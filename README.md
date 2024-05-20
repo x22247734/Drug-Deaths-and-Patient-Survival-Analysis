@@ -9,7 +9,7 @@ Pandas: Version 1.2.4 or higher
 NumPy: Version 1.20.3 or higher
 Matplotlib: Version 3.4.2 or higher
 Seaborn: Version 0.11.1 or higher
-Jupyter Notebook: (optional, for interactive development) Version 6.4.0 or higher
+Jupyter Notebook: Version 6.4.0 or higher
 2. Setup Instructions
 Step 1: Install Python
 Ensure that Python is installed on your system. You can download and install it from the official Python website.
@@ -37,8 +37,8 @@ export SPARK_HOME=/path/to/spark
 export PATH=$SPARK_HOME/bin:$PATH
 Replace /path/to/spark with the actual path where Spark is installed.
 
-Step 5: Start a Jupyter Notebook (Optional)
-If you want to use Jupyter Notebook for interactive development, start it by running:
+Step 5: Start a Jupyter Notebook
+We will use Jupyter Notebook to set up PySpark and execute the code. Start it by running:
 
 bash
 Copy code
@@ -49,16 +49,25 @@ Ensure that the following CSV files are available in your working directory:
 
 drug_deaths.csv
 PatientSurvival.csv
-Step 2: Run the Code
-You can run the provided Python script in your terminal or Jupyter Notebook. Below is the command to run the script from the terminal:
+Step 2: Setup PySpark in Jupyter Notebook
+Open a new Jupyter Notebook and set up PySpark by adding the following lines to the first cell:
 
-bash
+python
 Copy code
-python your_script_name.py
-Ensure to replace your_script_name.py with the actual name of your script.
+import findspark
+findspark.init()
 
-Step 3: Modify Parameters (if needed)
-The script includes various parameters and columns to select and analyze. You can modify these directly in the script as needed.
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("Drug Deaths and Patient Survival Analysis") \
+    .config("spark.sql.debug.maxToStringFields", 1000) \
+    .getOrCreate()
+Step 3: Run the Code
+You can copy and paste the provided Python code into the cells of your Jupyter Notebook. Ensure each logical block of code is placed in separate cells to make debugging easier.
+
+Step 4: Modify Parameters (if needed)
+The script includes various parameters and columns to select and analyze. You can modify these directly in the Jupyter Notebook cells as needed.
 
 4. Troubleshooting Tips
 Common Issues and Solutions
@@ -86,4 +95,5 @@ spark = SparkSession.builder \
     .getOrCreate()
 Jupyter Notebook Issues
 
-If using Jupyter Notebook, ensure the notebook is running in the same Python environment where dependencies are installed.
+Ensure the notebook is running in the same Python environment where dependencies are installed.
+Restart the Jupyter Notebook server if necessary.
